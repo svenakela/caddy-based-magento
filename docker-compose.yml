@@ -1,0 +1,111 @@
+version: "3.5"
+services:
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    restart: always
+    env_file:
+      - ./conf/rabbitmq.env
+    ports:
+      - 15672:15672
+      - 5672:5672
+    volumes:
+      - ./rabbitmq/etc/enabled_plugins:/etc/rabbitmq/enabled_plugins
+      - rabbitvar:/var/lib/rabbitmq
+
+  redis:
+    image: redis:5
+
+  elastic:
+    image: elasticsearch:6.8.7
+    restart: always
+    environment: 
+      discovery.type: single-node
+    ports:
+      - 9200:9200
+    volumes:
+      - elastic:/usr/share/elasticsearch/data
+
+  caddy:
+    build:
+      context: ./caddy
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - site:/srv/site
+      - ./.caddy_data:/data
+      - ./.caddy_config:/config
+      - ./conf/basic_auth.conf:/etc/basic_auth.conf
+      - ./caddy/etc/Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy/etc/tls_auto:/etc/tls_auto
+      - ./caddy/etc/tls_custom:/etc/tls_custom
+      - ./caddy/etc/tls_cloudflare:/etc/tls_cloudflare
+      - ./caddy/etc/tls_selfsigned:/etc/tls_selfsigned
+    environment:
+      - ACME_AGREE=true
+    ports:
+      - "2015:2015"
+      - "80:80"
+      - "443:443"
+    env_file:
+      - ./conf/caddy.env
+      - ./conf/caddy_sensitive.env
+
+  fpm:
+    build:
+      context: fpm/
+      dockerfile: Dockerfile
+    restart: always
+    links:
+      - db
+      - rabbitmq
+      - redis
+    depends_on:
+      - db
+      - rabbitmq
+      - redis
+    volumes:
+      - site:/srv/site
+    env_file:
+      - ./conf/global.env
+
+  db:
+    image: mariadb:10.5
+    restart: always
+    volumes:
+      - dbdata:/var/lib/mysql
+    env_file:
+      - ./conf/db.env
+
+  cli:
+    build:
+      context: cli/
+      dockerfile: Dockerfile
+    restart: always
+    command: run-jobs
+    links:
+      - db
+      - rabbitmq
+      - fpm
+      - caddy
+    depends_on:
+      - fpm
+    volumes:
+      - ~/.composer/cache:/root/.composer/cache
+      - ./cli/opt/supervisor:/opt/supervisor
+      - ./cli/etc/supervisor/conf.d:/etc/supervisor/conf.d
+      - site:/srv/site
+    env_file:
+      - ./conf/global.env
+      - ./conf/composer.env
+
+volumes:
+  site:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/site
+      o: bind
+  dbdata:
+  rabbitvar:
+  elastic:
+    driver: local

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+magento='/srv/site/bin/magento'
+
+if [ "`id -u`" == "0" ]
+then
+  magento="sudo -u www-data $magento"
+fi
+
+MAGENTO_COMPILE_LOCALES=`echo $MAGENTO_COMPILE_LOCALES | xargs`
+
+$magento setup:upgrade && \
+$magento setup:di:compile && \
+$magento setup:static-content:deploy -f --area adminhtml $MAGENTO_COMPILE_LOCALES && \
+$magento setup:static-content:deploy -f `if [ "$MAGENTO_COMPILE_THEME" != "" ]; then echo --theme $MAGENTO_COMPILE_THEME; fi` $MAGENTO_COMPILE_LOCALES && \
+$magento cache:clean && \
+$magento indexer:reindex

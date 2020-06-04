@@ -1,0 +1,12 @@
+#!/bin/bash
+
+[ "$DEBUG" = "true" ] && set -x
+
+magento='/srv/site/bin/magento'
+
+if [ "`id -u`" == "0" ]
+then
+  magento="sudo -u www-data $magento"
+fi
+
+$magento "$@"

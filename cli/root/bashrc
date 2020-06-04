@@ -1,0 +1,5 @@
+export LS_OPTIONS='--color=auto'
+alias ls='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -l'
+alias composer='sudo -u www-data composer'
+alias magento='sudo -u www-data /srv/site/bin/magento'

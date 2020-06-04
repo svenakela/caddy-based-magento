@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+cron
+/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -n &
+wait
+

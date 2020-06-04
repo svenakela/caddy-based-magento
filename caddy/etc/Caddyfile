@@ -1,0 +1,37 @@
+{
+    default_sni {$SERVER_NAME}
+}
+
+{$SERVER_NAME} {    
+    import /etc/{$TLS_MODE} 
+    import /etc/basic_auth.conf
+    root * /srv/site/pub
+    encode zstd gzip
+
+    @blocked {
+        path /media/customer/* /media/downloadable/* /media/import/* /media/custom_options/* /errors/*
+    }
+    respond @blocked 403
+
+    @notfound {
+        path_regexp reg_notfound \/\..*$|\/errors\/.*\.xml$|theme_customization\/.*\.xml
+    }
+    respond @notfound 404
+
+    @static {
+        path_regexp reg_static ^/static/(version\d*/)?(.*)$
+    }
+    rewrite @static /static/{http.regexp.reg_static.2}
+
+    file_server
+    php_fastcgi fpm:9000
+
+    log {
+        output file /var/log/caddy.log
+    }
+
+    header /media X-Frame-Options "SAMEORIGIN"
+    header /static X-Frame-Options "SAMEORIGIN"
+    header / X-Content-Type-Options "nosniff"
+
+}

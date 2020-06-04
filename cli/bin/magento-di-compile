@@ -1,0 +1,12 @@
+#!/bin/bash
+
+magento='/srv/site/bin/magento'
+
+if [ "`id -u`" == "0" ]
+then
+  magento="sudo -u www-data $magento"
+fi
+
+$magento setup:di:compile && \
+$magento cache:clean && \
+$magento cache:flush
