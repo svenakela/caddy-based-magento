@@ -1,5 +1,6 @@
 # Caddy V2 Based PHP Cloud
 (for Magento 2, or anything else actually)
+
 A collection of Docker images for running Magento 2 through [Caddy Server v2](https://caddyserver.com/)
 
 ## The Containers
