@@ -2,6 +2,19 @@
 (for Magento 2, or anything else actually)
 A collection of Docker images for running Magento 2 through [Caddy Server v2](https://caddyserver.com/)
 
+## The Containers
+
+![Docker containers](docker-compose.png)
+
+Following are the `docker-compose` names:
+* caddy - the web server, automatically providing TLS
+* fpm - the PHP FastCGI Process Manager, doing all the PHP processing
+* db - The Maria DB server
+* redis - Cache mechanism
+* elastic - container building an Elastic Search index for your site
+* rabbitmq - message bus for async operations
+* cli - your work horse for deployments, maintenance, cron jobs etc
+
 ## Setup
 
 Clone this repository to your machine!
