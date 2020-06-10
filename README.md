@@ -136,7 +136,15 @@ When something similar to:
 [SUCCESS]: Magento Admin URI: /admin_vs34fw
 Nothing to import.
 ```
-Is in your console, you have Magento site! Remember the Admin URI, that really is the Admin URI.
+is in your console, you have Magento site! Remember the Admin URI, that really is the Admin URI.
+
+This setup is running all messaging consumers with `supervisord` in the `cli` container. Unfortunately, the only way to disable the cron based consumers is to change the config manually. Open the file `site/app/etc/env.php` and add the following config:
+```bash
+    'cron_consumers_runner' => [
+        'cron_run' => false
+    ]
+```
+It doesn't matter where you put it but make sure there are commas before and after matching the rest of the config!
 
 Let's do some installation cleanup and redeploy:
 ```bash
