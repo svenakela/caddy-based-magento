@@ -1,6 +1,6 @@
 #!/bin/bash
 
-/srv/site/bin/magento queue:consumers:start --max-messages 1000 --single-thread $1 &
+/srv/site/bin/magento queue:consumers:start --max-messages 10000 --single-thread $1 &
 sleep 30
 while pgrep -f php.*$1 > /dev/null; do sleep 5; done
 
