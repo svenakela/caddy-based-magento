@@ -16,7 +16,7 @@ services:
     image: redis:5
 
   elastic:
-    image: elasticsearch:6.8.7
+    image: elasticsearch:7.9.0
     restart: always
     environment: 
       discovery.type: single-node
@@ -51,9 +51,7 @@ services:
       - ./conf/caddy_sensitive.env
 
   fpm:
-    build:
-      context: fpm/
-      dockerfile: Dockerfile
+    image: svenakela/caddy-based-magento-fpm:2.4.1
     restart: always
     links:
       - db
@@ -69,7 +67,7 @@ services:
       - ./conf/global.env
 
   db:
-    image: mariadb:10.5
+    image: mariadb:10.4
     restart: always
     volumes:
       - dbdata:/var/lib/mysql
@@ -77,9 +75,7 @@ services:
       - ./conf/db.env
 
   cli:
-    build:
-      context: cli/
-      dockerfile: Dockerfile
+    image: svenakela/caddy-based-magento-cli:2.4.1
     restart: always
     command: run-jobs
     links:

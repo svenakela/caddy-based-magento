@@ -1,4 +1,4 @@
-FROM php:7.3-cli
+FROM php:7.4.9-cli
 
 LABEL author=sven.wesley@gmail.com
 
@@ -12,14 +12,14 @@ RUN apt-get update \
     libpng-dev \ 
     libsodium-dev \
     libxslt1-dev \
-    libzip-dev \ 
+    libzip-dev \
+    libonig-dev \ 
     sudo \ 
     cron \ 
     rsyslog \ 
     default-mysql-client \ 
     git \
     supervisor \
-    curl \
     librabbitmq-dev \
     amqp-tools \
     unzip \
@@ -28,11 +28,10 @@ RUN apt-get update \
     vim
 
 # Configure the gd library
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 # Install required PHP extensions
 RUN docker-php-ext-install \
-  dom \
   gd \
   intl \
   mbstring \
@@ -41,11 +40,11 @@ RUN docker-php-ext-install \
   zip \
   soap \
   bcmath \
-  sodium
+  sockets
 
 RUN pecl install -o -f xdebug; pecl install mcrypt; docker-php-ext-enable mcrypt; pecl install amqp
 
-ENV PHP_MEMORY_LIMIT 1G
+ENV PHP_MEMORY_LIMIT 2G
 ENV PHP_ENABLE_XDEBUG false
 ENV MAGENTO_ROOT /srv/site
 

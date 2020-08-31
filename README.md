@@ -21,7 +21,7 @@ Following are the `docker-compose` names:
 Clone this repository to your machine!
 
 ### TLDR; ###
-If you want to create a simple local dev setup, add your Magento Composer credentials in `conf/composer.env` and go to [Install Magento](#install-magento)
+If you want to create a simple local dev setup, add your Magento Composer credentials in `conf/composer.env` and go to [Make the Containers](#make-the-containers)
 
 ### The Config Files ###
 
@@ -127,7 +127,8 @@ magento setup:install \
 --amqp-port="5672" \
 --amqp-user="magentorabbit" \
 --amqp-password="passiwortivettu" \
---amqp-virtualhost="/"
+--amqp-virtualhost="/" \
+--elasticsearch-host="elastic" \
 ```
 
 When something similar to:
@@ -138,7 +139,7 @@ Nothing to import.
 ```
 is in your console, you have Magento site! Remember the Admin URI, that really is the Admin URI.
 
-This setup is running all messaging consumers with `supervisord` in the `cli` container. Unfortunately, the only way to disable the cron based consumers is to change the config manually. Open the file `site/app/etc/env.php` and add the following config:
+This setup is running all messaging consumers with `supervisord` in the `cli` container. Unfortunately, the only way to disable the cron based consumers is to change the config manually. Open the file `/srv/site/app/etc/env.php` and add the following config:
 ```bash
     'cron_consumers_runner' => [
         'cron_run' => false
@@ -154,17 +155,6 @@ find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws 
 chown -R :www-data .
 chmod u+x bin/magento
 /usr/local/bin/magento-redeploy
-```
-
-Last thing to do is to add the Elastic server:
-```bash
-magento config:set catalog/search/engine 'elasticsearch6'
-magento config:set catalog/search/elasticsearch6_server_hostname 'elastic'
-magento config:set catalog/search/elasticsearch6_server_port '9200'
-magento config:set catalog/search/elasticsearch6_index_prefix 'magento2'
-magento config:set catalog/search/elasticsearch6_enable_auth '0'
-magento config:set catalog/search/elasticsearch6_server_timeout '15'
-magento index:reindex
 ```
 
 Congratulations, you can now test your site in a your favourite browser with `https://[servername]/`.
