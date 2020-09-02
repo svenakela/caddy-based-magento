@@ -159,6 +159,15 @@ chmod u+x bin/magento
 
 Congratulations, you can now test your site in a your favourite browser with `https://[servername]/`.
 
+## Disabling 2FA for development
+
+2 Factor Authentication is enabled by default but if this is your local dev station or you don't have access to a mail server at this stage, you may want or need to disable 2FA. Run following inside the CLI container (same as the one you already connected to with `./mgo-cli.sh`:
+```bash
+module:disable Magento_TwoFactorAuth
+magento cache:flush
+```
+Please DO NOT disable it because you can! 2FA is important for security and should be activated in all public servers!
+
 ## Advanced Setup
 This is not needed for a standard Magento setup!
 You need to have Caddy config skills to configure this server stack for anything else than Magento. But if you do have the knowledge, you can override everything in `caddy/etc/Caddyfile` and make it suite your needs. You either restart the Caddy container or reload from within the container to get the updates. Check the docker-composer logs to see if the config is valid.
