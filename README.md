@@ -163,7 +163,7 @@ Congratulations, you can now test your site in a your favourite browser with `ht
 
 2 Factor Authentication is enabled by default but if this is your local dev station or you don't have access to a mail server at this stage, you may want or need to disable 2FA. Run following inside the CLI container (same as the one you already connected to with `./mgo-cli.sh`:
 ```bash
-module:disable Magento_TwoFactorAuth
+magento module:disable Magento_TwoFactorAuth
 magento cache:flush
 ```
 Please DO NOT disable it because you can! 2FA is important for security and should be activated in all public servers!
