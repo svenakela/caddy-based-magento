@@ -96,10 +96,7 @@ The site folder must be empty. Clean it and create the Composer project. Note th
 When requested, fill in the Magento Composer keys (created from Magento Marketplace).
 
 ```bash
-rm -rf /srv/site/*
-
 /usr/local/bin/composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition /srv/site
-
 chown -R www-data:www-data /srv/site
 ```
 
@@ -129,7 +126,7 @@ magento setup:install \
 --amqp-user="magentorabbit" \
 --amqp-password="passiwortivettu" \
 --amqp-virtualhost="/" \
---elasticsearch-host="elastic" \
+--elasticsearch-host="elastic" 
 ```
 
 When something similar to:
