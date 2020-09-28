@@ -79,6 +79,7 @@ Make sure your setup works first before adding a password.
 In the root folder, execute:
 ```bash
 docker-compose build
+mkdir site
 docker-compose up -d
 ```
 
