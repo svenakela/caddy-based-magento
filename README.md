@@ -89,7 +89,7 @@ You should now have a running server platform!
 Enter the CLI docker container. This is the main tool for you to work with the Magento site and there is a bash script to kickstart the command line:
 
 ```bash 
-mgo-cli.sh
+./mgo-cli.sh
 ```
 The site folder must be empty. Clean it and create the Composer project. Note that first time Composer is used the root user must be the one executing the command. If not there will be errors.
 
