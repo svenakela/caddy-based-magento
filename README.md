@@ -57,8 +57,8 @@ This file is only used if you use a DNS challenge for the certificate. If you do
 
 ### conf/composer.env ###
 Add your Magento tokens in `COMPOSER_MAGENTO_USERNAME` and `COMPOSER_MAGENTO_PASSWORD`.
-If you have a Github account you can should add a Github token as well to get access to dev repos.
-Follow [this link to make the Github token](https://github.com/settings/tokens/new?scopes=repo&description=Composer+Token+Magento+dev). 
+If you have a Github account and this is a dev environment you should add a Github token as well to get access to dev repos.
+[Follow this link to make the Github token](https://github.com/settings/tokens/new?scopes=repo&description=Composer+Token+Magento+dev). 
 
 ### conf/db.env ###
 Set GOOD user names and passwords in `db.env`. Long and ugly! These settings are used to automatically create the database when then Maria DB container startup for the first time.
