@@ -65,7 +65,7 @@ Set GOOD user names and passwords in `db.env`. Long and ugly! These settings are
 
 ### conf/global.env ###
 This file has Magento specific settings. What you MIGHT need to change:
-- `MAGENTO_RUN_MODE` if changed to `development` compilation and deployment is disabled. The server will be slower but easier to work with when it comes to local dev as changes are visible immediately.
+- `MAGENTO_RUN_MODE` if changed to `developer` compilation and deployment is disabled. The server will be slower but easier to work with when it comes to local dev as changes are visible immediately.
 - `MAGENTO_COMPILE_THEME` - If you change to another or create your own theme, set the name here.
 - `MAGENTO_COMPILE_LOCALES` - Set your locale here or multiple if you need more than one. Keep `en_US` as Admin use it as a fallback.
 
