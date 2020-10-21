@@ -57,14 +57,15 @@ This file is only used if you use a DNS challenge for the certificate. If you do
 
 ### conf/composer.env ###
 Add your Magento tokens in `COMPOSER_MAGENTO_USERNAME` and `COMPOSER_MAGENTO_PASSWORD`.
-If you have a Github account you can add a Github token as well to get access to dev repos. 
+If you have a Github account and this is a dev environment you should add a Github token as well to get access to dev repos.
+[Follow this link to make the Github token](https://github.com/settings/tokens/new?scopes=repo&description=Composer+Token+Magento+dev). 
 
 ### conf/db.env ###
 Set GOOD user names and passwords in `db.env`. Long and ugly! These settings are used to automatically create the database when then Maria DB container startup for the first time.
 
 ### conf/global.env ###
 This file has Magento specific settings. What you MIGHT need to change:
-- `MAGENTO_RUN_MODE` if changed to `development` compilation and deployment is disabled. The server will be slower but easier to work with when it comes to local dev as changes are visible immediately.
+- `MAGENTO_RUN_MODE` if changed to `developer` compilation and deployment is disabled. The server will be slower but easier to work with when it comes to local dev as changes are visible immediately.
 - `MAGENTO_COMPILE_THEME` - If you change to another or create your own theme, set the name here.
 - `MAGENTO_COMPILE_LOCALES` - Set your locale here or multiple if you need more than one. Keep `en_US` as Admin use it as a fallback.
 
@@ -79,6 +80,7 @@ Make sure your setup works first before adding a password.
 In the root folder, execute:
 ```bash
 docker-compose build
+mkdir site
 docker-compose up -d
 ```
 
@@ -88,17 +90,14 @@ You should now have a running server platform!
 Enter the CLI docker container. This is the main tool for you to work with the Magento site and there is a bash script to kickstart the command line:
 
 ```bash 
-mgo-cli.sh
+./mgo-cli.sh
 ```
 The site folder must be empty. Clean it and create the Composer project. Note that first time Composer is used the root user must be the one executing the command. If not there will be errors.
 
 When requested, fill in the Magento Composer keys (created from Magento Marketplace).
 
 ```bash
-rm -rf /srv/site/*
-
 /usr/local/bin/composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition /srv/site
-
 chown -R www-data:www-data /srv/site
 ```
 
@@ -128,7 +127,7 @@ magento setup:install \
 --amqp-user="magentorabbit" \
 --amqp-password="passiwortivettu" \
 --amqp-virtualhost="/" \
---elasticsearch-host="elastic" \
+--elasticsearch-host="elastic" 
 ```
 
 When something similar to:
@@ -158,6 +157,15 @@ chmod u+x bin/magento
 ```
 
 Congratulations, you can now test your site in a your favourite browser with `https://[servername]/`.
+
+## Disabling 2FA for development
+
+2 Factor Authentication is enabled by default but if this is your local dev station or you don't have access to a mail server at this stage, you may want or need to disable 2FA. Run following inside the CLI container (same as the one you already connected to with `./mgo-cli.sh`:
+```bash
+magento module:disable Magento_TwoFactorAuth
+magento cache:flush
+```
+Please DO NOT disable it because you can! 2FA is important for security and should be activated in all public servers!
 
 ## Advanced Setup
 This is not needed for a standard Magento setup!
