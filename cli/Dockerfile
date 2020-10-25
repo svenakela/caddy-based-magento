@@ -1,4 +1,4 @@
-FROM php:7.4.9-cli
+FROM php:7.4-cli
 
 LABEL author=sven.wesley@gmail.com
 

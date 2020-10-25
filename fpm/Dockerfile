@@ -1,4 +1,4 @@
-FROM php:7.4.9-fpm
+FROM php:7.4-fpm
 
 LABEL author=sven.wesley@gmail.com
 

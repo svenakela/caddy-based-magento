@@ -51,7 +51,7 @@ services:
       - ./conf/caddy_sensitive.env
 
   fpm:
-    image: svenakela/caddy-based-magento-fpm:2.4.1
+    image: svenakela/caddy-based-magento-fpm:2.4.3
     restart: always
     links:
       - db
@@ -75,7 +75,7 @@ services:
       - ./conf/db.env
 
   cli:
-    image: svenakela/caddy-based-magento-cli:2.4.1
+    image: svenakela/caddy-based-magento-cli:2.4.3
     restart: always
     command: run-jobs
     links:
