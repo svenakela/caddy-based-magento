@@ -1,4 +1,4 @@
-FROM php:7.3-cli
+FROM php:7.4-cli
 
 LABEL author=sven.wesley@gmail.com
 
@@ -28,7 +28,7 @@ RUN apt-get update \
     vim
 
 # Configure the gd library
-RUN docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 # Install required PHP extensions
 RUN docker-php-ext-install \

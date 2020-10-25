@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:7.4-fpm
 
 LABEL author=sven.wesley@gmail.com
 
@@ -19,7 +19,7 @@ RUN apt-get update \
     unzip
 
 # Configure the gd library
-RUN docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 # Install required PHP extensions
 RUN docker-php-ext-install \
