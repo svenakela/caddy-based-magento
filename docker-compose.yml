@@ -43,9 +43,9 @@ services:
     environment:
       - ACME_AGREE=true
     ports:
-      - "2015:2015"
-      - "80:80"
-      - "443:443"
+      - "42015:2015"
+      - "4080:80"
+      - "4443:443"
     env_file:
       - ./conf/caddy.env
       - ./conf/caddy_sensitive.env
