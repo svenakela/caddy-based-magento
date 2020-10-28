@@ -18,10 +18,14 @@
     }
     respond @notfound 404
 
-    @static {
-        path_regexp reg_static ^/static/(version\d*/)?(.*)$
+    @staticPath path_regexp reg_static ^/static/(version\d*/)?(.*)$
+    handle @staticPath {
+        @static file /static/{re.reg_static.2}
+        rewrite @static /static/{re.reg_static.2}
+
+        @dynamic not file /static/{re.reg_static.2}
+        rewrite @dynamic /static.php?resource={re.reg_static.2}
     }
-    rewrite @static /static/{http.regexp.reg_static.2}
 
     file_server
     php_fastcgi fpm:9000
@@ -35,3 +39,4 @@
     header / X-Content-Type-Options "nosniff"
 
 }
+
