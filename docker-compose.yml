@@ -75,7 +75,7 @@ services:
       - ./conf/db.env
 
   cli:
-    image: svenakela/caddy-based-magento-cli:2.4.3-composer1
+    image: svenakela/caddy-based-magento-cli:2.4-composer1
     restart: always
     command: run-jobs
     links:
