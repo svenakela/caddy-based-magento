@@ -100,6 +100,7 @@ When requested, fill in the Magento Composer keys (created from Magento Marketpl
 /usr/local/bin/composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition /srv/site
 chown -R www-data:www-data /srv/site
 ```
+Note: If composer fails with the error "Killed" you most probably need more memory, in a VPS environment at least 4 GB is needed since Mgo 2.4.x.
 
 From now on Composer should be executed as the `www-data` user (no more root!). This is happening automatically if you use the `composer` command which is an alias that also changes to the `www-data` user.
 If you by mistake do any operation as root and files change owner, you will end up with some classical Magento behaviours like rapidly growing log files etc. Always use the aliased command or make sure to sudo to `www-data`.
