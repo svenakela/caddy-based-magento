@@ -207,3 +207,8 @@ There are some scripts in the project root as well for easier maintenance and da
 
      `./db-restore.sh 2018-06-01`
 * topic_consumer.py - This is over the top. If don't know what it is, you don't need it. :)
+
+
+### Infrastructure model
+
+![Infrastructure model](.infragenie/infrastructure_model.png)
