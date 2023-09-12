@@ -3,6 +3,8 @@
 
 A collection of Docker images for running Magento 2 through [Caddy Server v2](https://caddyserver.com/). 
 
+Now running Caddy 2.7.4 Alpine.
+
 ## The Containers
 
 ![Docker containers](docker-compose.png)
