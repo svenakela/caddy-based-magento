@@ -1,4 +1,4 @@
-FROM caddy:2.4.5-builder AS builder
+FROM caddy:2.7.4-builder-alpine AS builder
 
 RUN xcaddy build \
     --with github.com/hairyhenderson/caddy-teapot-module \
